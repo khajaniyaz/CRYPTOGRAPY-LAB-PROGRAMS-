@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int key[2][2], i, j, msgVec[2], res[2];
+    char msg[100];
+
+    printf("Enter 2x2 key matrix (4 values): ");
+    for (i = 0; i < 2; i++)
+        for (j = 0; j < 2; j++)
+            scanf("%d", &key[i][j]);
+
+    printf("Enter message (UPPERCASE only): ");
+    scanf("%s", msg);
+    if (strlen(msg) % 2 != 0) strcat(msg, "X"); // pad if needed
+
+    printf("Encrypted: ");
+    for (i = 0; i < strlen(msg); i += 2) {
+        msgVec[0] = msg[i] - 'A';
+        msgVec[1] = msg[i+1] - 'A';
+
+        for (j = 0; j < 2; j++)
+            res[j] = (key[j][0]*msgVec[0] + key[j][1]*msgVec[1]) % 26;
+
+        printf("%c%c", res[0] + 'A', res[1] + 'A');
+    }
+
+    return 0;
+}
