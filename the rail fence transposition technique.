@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char msg[100], res[100];
+    int rail, len, i, j = 0;
+
+    printf("Enter message: ");
+    scanf("%s", msg);
+    printf("Enter number of rails: ");
+    scanf("%d", &rail);
+    len = strlen(msg);
+
+    for (int r = 0; r < rail; r++) {
+        i = r;
+        int down = (rail - r - 1) * 2, up = r * 2;
+        int step = (r == 0 || r == rail - 1) ? down + up : down;
+
+        while (i < len) {
+            res[j++] = msg[i];
+            if (r == 0 || r == rail - 1) {
+                i += step;
+            } else {
+                i += (i + down < len) ? down : up;
+                int temp = down; down = up; up = temp;
+            }
+        }
+    }
+
+    res[j] = '\0';
+    printf("Encrypted: %s\n", res);
+    return 0;
+}
